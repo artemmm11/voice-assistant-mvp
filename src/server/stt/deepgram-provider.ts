@@ -88,7 +88,11 @@ class DeepgramStream implements STTStream {
 
   send(audioChunk: Buffer): void {
     if (this.connection && this.isOpen) {
-      this.connection.send(audioChunk);
+      const arrayBuffer = audioChunk.buffer.slice(
+        audioChunk.byteOffset,
+        audioChunk.byteOffset + audioChunk.byteLength
+      ) as ArrayBuffer;
+      this.connection.send(arrayBuffer);
     }
   }
 
