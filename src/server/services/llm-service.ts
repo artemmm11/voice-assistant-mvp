@@ -1,7 +1,7 @@
 import OpenAI from 'openai';
 import { zodResponseFormat } from 'openai/helpers/zod';
 import { config } from '../config';
-import { LLMResponseSchema, type LLMResponse } from '@/shared/types';
+import { LLMResponseSchema, type LLMResponse } from '../../shared/types';
 
 const openai = new OpenAI({
   apiKey: config.openai.apiKey,

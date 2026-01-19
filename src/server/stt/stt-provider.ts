@@ -1,4 +1,4 @@
-import type { STTProvider, STTStream } from '@/shared/types';
+import type { STTProvider, STTStream } from '../../shared/types';
 
 export abstract class BaseSTTProvider implements STTProvider {
   abstract name: string;

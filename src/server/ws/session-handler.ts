@@ -1,8 +1,8 @@
 import type WebSocket from 'ws';
 import type { IncomingMessage } from 'http';
 import { v4 as uuidv4 } from 'uuid';
-import type { ClientMessage, ServerMessage, STTStream, ErrorCode } from '@/shared/types';
-import { ErrorCodes } from '@/shared/types';
+import type { ClientMessage, ServerMessage, STTStream, ErrorCode } from '../../shared/types';
+import { ErrorCodes } from '../../shared/types';
 import { createSTTProvider } from '../stt/deepgram-provider';
 import { generateLLMResponse } from '../services/llm-service';
 import { generateTTS } from '../services/tts-service';
@@ -31,7 +31,7 @@ function sendError(ws: WebSocket, message: string, code: string): void {
   send(ws, { type: 'error', message, code });
 }
 
-function sendStatus(ws: WebSocket, status: import('@/shared/types').AppStatus): void {
+function sendStatus(ws: WebSocket, status: import('../../shared/types').AppStatus): void {
   send(ws, { type: 'status', status });
 }
 

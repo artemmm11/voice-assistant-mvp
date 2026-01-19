@@ -1,5 +1,5 @@
 import { createClient, LiveTranscriptionEvents } from '@deepgram/sdk';
-import type { STTStream } from '@/shared/types';
+import type { STTStream } from '../../shared/types';
 import { BaseSTTProvider } from './stt-provider';
 import { config } from '../config';
 
