@@ -1,0 +1,45 @@
+{
+  "name": "voice-app-mvp",
+  "version": "1.0.0",
+  "description": "Real-time voice-to-LLM web application MVP",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch src/server/index.ts",
+    "dev:next": "next dev -p 3001",
+    "build": "next build && tsc -p tsconfig.server.json",
+    "start": "node dist/server/index.js",
+    "lint": "eslint . --ext .ts,.tsx",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@deepgram/sdk": "^3.0.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "next": "^14.0.4",
+    "openai": "^4.24.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "uuid": "^9.0.1",
+    "ws": "^8.16.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.10.6",
+    "@types/react": "^18.2.46",
+    "@types/react-dom": "^18.2.18",
+    "@types/uuid": "^9.0.7",
+    "@types/ws": "^8.5.10",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "^14.0.4",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.4.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
