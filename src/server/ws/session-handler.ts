@@ -15,6 +15,7 @@ interface Session {
   startTime: number;
   lastActivityTime: number;
   isCancelled: boolean;
+  isFinishing: boolean;
   vadTimeout: NodeJS.Timeout | null;
   maxDurationTimeout: NodeJS.Timeout | null;
 }
@@ -46,6 +47,7 @@ export function handleConnection(ws: WebSocket, clientIp: string): void {
     startTime: Date.now(),
     lastActivityTime: Date.now(),
     isCancelled: false,
+    isFinishing: false,
     vadTimeout: null,
     maxDurationTimeout: null,
   };
@@ -145,6 +147,11 @@ function resetVadTimeout(session: Session): void {
 async function finishRecording(session: Session): Promise<void> {
   const { ws, sttStream } = session;
 
+  if (session.isFinishing) {
+    return;
+  }
+  session.isFinishing = true;
+
   if (session.vadTimeout) {
     clearTimeout(session.vadTimeout);
     session.vadTimeout = null;
@@ -157,6 +164,7 @@ async function finishRecording(session: Session): Promise<void> {
 
   if (!sttStream) {
     sendStatus(ws, 'idle');
+    session.isFinishing = false;
     return;
   }
 
@@ -169,6 +177,7 @@ async function finishRecording(session: Session): Promise<void> {
     if (!finalText.trim()) {
       sendError(ws, 'No speech detected', ErrorCodes.INVALID_INPUT);
       sendStatus(ws, 'idle');
+      session.isFinishing = false;
       return;
     }
 
@@ -184,6 +193,7 @@ async function finishRecording(session: Session): Promise<void> {
     send(ws, { type: 'tts_audio', audioBase64, mimeType });
 
     sendStatus(ws, 'ready_to_play');
+    session.isFinishing = false;
   } catch (error) {
     console.error('Processing error:', error instanceof Error ? error.message : 'Unknown');
     
@@ -205,6 +215,7 @@ async function finishRecording(session: Session): Promise<void> {
 
     sendError(ws, errorMessage, errorCode);
     sendStatus(ws, 'idle');
+    session.isFinishing = false;
   }
 }
 
